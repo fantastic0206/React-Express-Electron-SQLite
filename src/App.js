@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import api from "./services/api";
+import { getTestData } from "./actions/test";
 
 function App() {
+  const dispatch = useDispatch();
+
   const [label, setLabel] = useState("");
-  const [data, setData] = useState([]);
+
+  const { testData } = useSelector((state) => state.testData);
+  console.log(testData);
 
   const labelData = () => {
-    api.get("/api/test").then((result) => setData(result.data.data));
+    dispatch(getTestData());
   };
 
   useEffect(() => {
-    console.log(data);
-    if (data.length !== 0) {
-      data.map((item) => {
-        if (item.email === "admin@example.com") setLabel(item.email);
+    if (testData.length !== 0) {
+      testData.map((item) => {
+        if (item.email === "admin@example.com") setLabel(item.name);
       });
     }
-  }, [data]);
+  }, [testData]);
 
   return (
     <div>

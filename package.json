@@ -32,7 +32,10 @@
     "md5": "^2.3.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-redux": "^7.2.4",
     "react-scripts": "3.2.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.3.0",
     "sqlite3": "^5.0.2",
     "youch": "^2.0.10"
   },
@@ -41,10 +44,11 @@
     "build": "rescripts build",
     "test": "rescripts test",
     "eject": "react-scripts eject",
-    "electron-dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-dev": "concurrently \"cross-env BROWSER=none yarn dev\" \"wait-on http://localhost:3000 && electron .\"",
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
-    "electron-pack": "electron-builder -w"
+    "electron-pack": "electron-builder -w",
+    "dev": "react-scripts start"
   },
   "eslintConfig": {
     "extends": "react-app"
