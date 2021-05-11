@@ -30,6 +30,27 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         }
       }
     );
+
+    db.run(
+      `CREATE TABLE notes (
+            note_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            papperType TEXT,
+            papperColor TEXT,
+            title TEXT,
+            content TEXT,
+            imagePath TEXT,
+            imageName TEXT
+            )`,
+      (err) => {
+        if (err) {
+          // Table already created
+        } else {
+          var insert =
+            "INSERT INTO notes (papperType, papperColor, title, content, imagePath, imageName) VALUES (?, ?, ?, ?, ?, ?)";
+          db.run(insert, ["Plain", "#f8f9fa", "", "", "", ""]);
+        }
+      }
+    );
   }
 });
 

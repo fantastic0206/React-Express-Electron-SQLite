@@ -26,13 +26,26 @@
     }
   },
   "dependencies": {
+    "@popperjs/core": "^2.9.2",
     "axios": "^0.19.2",
+    "bootstrap": "^5.0.0",
+    "cors": "^2.8.5",
     "electron-is-dev": "^1.1.0",
     "express": "^4.17.1",
+    "font-awesome": "^4.7.0",
+    "fs": "0.0.1-security",
+    "jquery": "^3.6.0",
     "md5": "^2.3.0",
+    "multer": "^1.4.2",
+    "node-env-run": "^4.0.2",
+    "nodemon": "^2.0.7",
+    "popper": "^1.0.1",
     "react": "^16.11.0",
+    "react-bootstrap": "^1.5.2",
     "react-dom": "^16.11.0",
+    "react-popper": "^2.2.5",
     "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.2.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
@@ -44,11 +57,12 @@
     "build": "rescripts build",
     "test": "rescripts test",
     "eject": "react-scripts eject",
-    "electron-dev": "concurrently \"cross-env BROWSER=none yarn dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3001 && electron .\"",
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
     "electron-pack": "electron-builder -w",
-    "dev": "react-scripts start"
+    "dev": "react-scripts start",
+    "server": "nodemon public/server --exec nodemon"
   },
   "eslintConfig": {
     "extends": "react-app"
