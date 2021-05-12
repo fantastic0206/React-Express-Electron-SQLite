@@ -9,7 +9,7 @@ import { getNotes, searchNotes } from "../actions/note";
 
 import ShowImageModal from "../components/ShowImageModal";
 
-const api = "http://192.168.107.47:3001";
+const api = "http://localhost:3001";
 
 const Plain = {
   light: "#f8f9fa",
@@ -75,7 +75,7 @@ const Dotted = {
 };
 
 const typeArr = {
-  Plain: "bg-light",
+  // Plain: "bg-light",
   Lined: "lined-bg",
   Grid: "grid-bg",
   Dotted: "dott-bg",
@@ -95,7 +95,7 @@ function Note() {
 
   const selectNote = (data) => {
     setSelectedNote(data.note_id);
-    setSelectedData(data)
+    setSelectedData(data);
   };
 
   const searchData = (e) => {
@@ -107,16 +107,16 @@ function Note() {
   };
 
   const viewImage = (imagePath) => {
-    let pathImageName = imagePath.replace(/\\/g, '/');
-    if(pathImageName[0] !== '/') pathImageName = '/' + pathImageName;
+    let pathImageName = imagePath.replace(/\\/g, "/");
+    if (pathImageName[0] !== "/") pathImageName = "/" + pathImageName;
     setPathImage(api + pathImageName);
-    
-    setShowImage(true)
-  }
+
+    setShowImage(true);
+  };
 
   const handleCancel = () => {
     setShowImage(false);
-  }
+  };
 
   useEffect(() => {
     dispatch(getNotes());
@@ -126,18 +126,16 @@ function Note() {
     <div className="container-fluid">
       <div className="row">
         <div className="col">
-          <div className="col-md-6">
-            <div className="search-wrap">
-              <div className="mb-search d-none d-xl-block mb-4 ">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  onChange={(e) => searchData(e)}
-                />
-              </div>
-              <div className="search-icon d-none d-xl-block ">
-                <i className="fa fa-search"></i>
-              </div>
+          <div className="search-wrap">
+            <div className="mb-search mb-4 ">
+              <input
+                type="text"
+                placeholder="Search..."
+                onChange={(e) => searchData(e)}
+              />
+            </div>
+            <div className="search-icon">
+              <i className="fa fa-search"></i>
             </div>
           </div>
         </div>
@@ -152,9 +150,9 @@ function Note() {
                 onClick={() => selectNote(data)}
               >
                 <div
-                  className={
-                    `note-hover p-2 p-md-3 rounded-bg box-shadow ${typeArr[data.papperType]} ${data.note_id == selectedNote?"note-active":""}`
-                  }
+                  className={`note-hover p-2 p-md-3 rounded-bg box-shadow ${
+                    typeArr[data.papperType]
+                  } ${data.note_id == selectedNote ? "note-active" : ""}`}
                   style={
                     data.papperType === "Plain"
                       ? { backgroundColor: Plain[data.papperColor] }
@@ -177,7 +175,12 @@ function Note() {
                   </div>
                   <p className="mb-0 ">{data.content}</p>
                   <div className="image-name-div">
-                    <label className="image-name" onClick={() => viewImage(data.imagePath)}>{data.imageName}</label>
+                    <label
+                      className="image-name"
+                      onClick={() => viewImage(data.imagePath)}
+                    >
+                      {data.imageName}
+                    </label>
                   </div>
                 </div>
               </div>
@@ -216,6 +219,15 @@ function Note() {
                     </div>
                   </div>
                   <p className="mb-0">{data.content}</p>
+                  <div className="image-name-div">
+                    <label
+                      className="image-name"
+                      style={{float: "unset"}}
+                      onClick={() => viewImage(data.imagePath)}
+                    >
+                      {data.imageName}
+                    </label>
+                  </div>
                 </div>
               </div>
             );

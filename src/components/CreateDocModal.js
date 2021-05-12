@@ -24,7 +24,7 @@ function CreateDocModal(props) {
     <Modal
       show={show}
       onHide={handleCancel}
-      dialogClassName="modal-90w"
+      dialogClassName="modal-90w create-doc-modal"
       aria-labelledby="example-custom-modal-styling-title"
     >
       <Modal.Header closeButton>

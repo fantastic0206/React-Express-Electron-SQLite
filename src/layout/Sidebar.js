@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const noteImg = require("../assets/images/note.png");
 const importantImg = require("../assets/images/important.png");
@@ -8,7 +8,7 @@ const categoryImg = require("../assets/images/category.png");
 
 function Sidebar() {
   return (
-    <div className="sidebar d-none d-xl-block">
+    <div className="sidebar">
       <ul className="sidebar-nav">
         <li className="sidebar-item">
           <img className="menu-icon img-fluid" src={noteImg} alt="" />

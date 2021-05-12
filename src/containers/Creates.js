@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import CreateDocModal from "../components/CreateDocModal";
 import FileUploadModal from "../components/FileUploadModal";
 import $ from "jquery";
 
 import { addNote, updateNote } from "../actions/note";
+
+import { store } from "react-notifications-component";
 
 function Creates(props) {
   const dispatch = useDispatch();
@@ -21,7 +23,8 @@ function Creates(props) {
     pathImage,
     imageName,
   } = props.location.state ? props.location.state : "";
-  console.log(papperType);
+
+  const { isSaved } = useSelector((state) => state.noteData);
 
   const [showCreateDoc, setShowCreateDoc] = useState(false);
   const [showFileUpload, setShowFileUpload] = useState(false);
@@ -30,14 +33,6 @@ function Creates(props) {
   const [fileData, setFileData] = useState();
 
   const [fileName, setFileName] = useState();
-
-  $(".mb-bars").click(function () {
-    $(".sidebar-2").show(500);
-  });
-
-  $(".close-btn").click(function () {
-    $(".sidebar-2").hide(500);
-  });
 
   const showImageBar = () => {
     $(".icon-wrap").fadeToggle("slow");
@@ -79,6 +74,24 @@ function Creates(props) {
     setFileName(imageName);
   }, [createTitle, propContent, imageName]);
 
+  useEffect(() => {
+    if (isSaved) {
+      store.addNotification({
+        title: "Success!",
+        message: "Save Success",
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 2000,
+          onScreen: true,
+        },
+      });
+    }
+  }, [isSaved]);
+
   return (
     <div>
       <section className="custom-page">
@@ -109,7 +122,7 @@ function Creates(props) {
                 <hr />
               </div> */}
               <div className="editable-tittle text-muted mt-5">
-                <div className="mb-title d-none d-xl-block mb-4 ">
+                <div className="mb-title mb-4">
                   <input
                     type="text"
                     placeholder="Title"

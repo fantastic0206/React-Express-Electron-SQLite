@@ -13,7 +13,7 @@ function Layout() {
       <section className="note-area" id="noteArea">
         <div className="container-fluid g-0  extra-mt">
           <div className="row">
-            <div className="col-md-2 d-none d-xl-block">
+            <div className="col-md-2">
               <Sidebar />
             </div>
             <div className="col-xl-10 col-12">

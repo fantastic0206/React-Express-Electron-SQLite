@@ -47,3 +47,11 @@ export function searchNotes(searchKey) {
     });
   };
 }
+
+export function initSaved() {
+  return function (dispatch) {
+    dispatch({
+      type: "INIT_SAVED",
+    });
+  };
+}

@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import NotePapper from "../components/NotePapper";
 import NoteColor from "../components/NoteColor";
 
+import { initSaved } from "../actions/note";
+import { useDispatch } from "react-redux";
+
 function Create() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [papperType, setPapperType] = useState("Plain");
   const [color, setColor] = useState("light");
@@ -22,17 +26,21 @@ function Create() {
     setColor(color);
   };
 
+  useEffect(() => {
+    dispatch(initSaved());
+  }, [])
+
   return (
-    <div className="container  ">
+    <div className="container">
       <div className="row">
-        <div className="col-xl-6">
-          <div className="search-wrap">
-            <div className="mb-search mb-2">
+        <div className="col-md-6">
+          <div className="write-wrap">
+            <div className="mb-write mb-2">
               <input type="text" placeholder="Write tittle here.." onChange={(e) => {setCreateTitle(e.target.value)}} />
             </div>
           </div>
         </div>
-        <div className="col-xl-5 d-none d-xl-block ">
+        <div className="col-md-6">
           <Link to="/note">
             <div className="home-back btn home-xl-back p-3 radius bg-primary">
               <i className="fa text-white fa-th-list"></i>

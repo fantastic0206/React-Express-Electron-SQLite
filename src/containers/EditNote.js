@@ -54,7 +54,7 @@ function EditNote(props) {
             </div>
           </div>
         </div>
-        <div className="col-xl-5 d-none d-xl-block ">
+        <div className="col-xl-5">
           <Link to="/note">
             <div className="home-back btn home-xl-back p-3 radius bg-primary">
               <i className="fa text-white fa-th-list"></i>

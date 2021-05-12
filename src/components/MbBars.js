@@ -1,8 +1,10 @@
 import React from "react";
 import $ from "jquery";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { store } from "react-notifications-component"
 
 function MbBars(props) {
+  const history = useHistory();
   const { selectedData, selectGrid, selectedGrid } = props;
 
   const createIcon = () => {
@@ -11,6 +13,29 @@ function MbBars(props) {
 
   const rotate = (e) => {
     $(e.target).toggleClass("down");
+  };
+
+  const goEditNote = () => {
+    if (selectedData) {
+      history.push({
+        pathname: "/editnote",
+        state: { selectedData: selectedData },
+      });
+    } else {
+      store.addNotification({
+        title: "Warning!",
+        message: "Select Note you are going to edit",
+        type: "warning",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 2000,
+          onScreen: true,
+        },
+      });
+    }
   };
 
   return (
@@ -28,13 +53,7 @@ function MbBars(props) {
         </div>
         <div className="icon-group ">
           <div className="image-icon box-shadow p-3 bg-light mb-2 rounded-circle">
-            <Link 
-              to="/create"
-              data-bs-target="#exampleModal"
-              data-bs-toggle="modal"
-              data-bs-dismiss="modal"
-            >
-              {" "}
+            <Link to="/create">
               <i className="fa fa-image pr-0"></i>
             </Link>
           </div>
@@ -44,22 +63,16 @@ function MbBars(props) {
             </a>
           </div>
           <div className="image-icon box-shadow p-3 bg-light rounded-circle">
-            <Link
-              to={{
-                pathname: "/editnote",
-                state: { selectedData: selectedData },
-              }}
-            >
+            <a style={{ cursor: "pointer" }} onClick={goEditNote}>
               <i className="fa fa-pencil"></i>
-            </Link>
+            </a>
           </div>
         </div>
       </div>
       <div className="right-bar-area" id="right-bar">
         <div className="bar-wrap bg-primary box-shadow border-0 ">
-          <div className="bar-item ">
+          <div className="bar-item " style={{ cursor: "pointer" }}>
             <a
-              style={{ cursor: "pointer" }}
               onClick={() => {
                 selectGrid("th");
               }}

@@ -21,12 +21,10 @@ function App() {
         <Route path="/">
           <Header />
           <section className="note-area" id="noteArea">
-            <div className="container-fluid g-0  extra-mt">
+            <div className="container-fluid g-0 extra-mt">
               <div className="row">
-                <div className="col-md-2 d-none d-xl-block">
-                  <Sidebar />
-                </div>
-                <div className="col-xl-10 col-12">
+                <Sidebar />
+                <div className="note-content">
                   <Switch>
                     <Route exact path="/note" component={Note} />
                     <Route exact path="/create" component={Create} />

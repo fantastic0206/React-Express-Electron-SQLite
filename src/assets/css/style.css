@@ -19,8 +19,9 @@ a {
 #root,
 body {
   font-family: Nunito !important;
-  background: #efefef;
+  background-color: #efefef !important;
   font-weight: 400;
+  overflow-x: hidden;
 }
 
 /*BASIC TYPOGRAPHY START*/
@@ -62,9 +63,9 @@ body {
 /*BASIC TYPOGRAPHY END*/
 
 .sidebar {
-  position: fixed;
+  /* position: fixed; */
 
-  width: 15%;
+  width: 300px !important;
   height: 100vh;
   background: #fff;
   margin-top: -80px;
@@ -74,7 +75,7 @@ body {
   margin: 0;
   padding: 0;
   list-style: none;
-  padding-top: 90px;
+  padding-top: 10px;
 }
 
 /* .fa {
@@ -155,7 +156,7 @@ body {
 }
 
 .mb-bars {
-  margin-left: 5px;
+  margin-left: 9px;
   font-size: 30px;
 }
 
@@ -179,6 +180,16 @@ body {
   border: 0;
 }
 
+.mb-write input {
+  padding: 10px;
+  padding: 10px;
+  padding-left: 20px;
+  width: 100%;
+  border-radius: 25px;
+  outline: none;
+  border: 0;
+}
+
 .mb-title input {
   padding: 10px;
   padding: 10px;
@@ -188,8 +199,9 @@ body {
   border: 0;
 }
 
-.mb-search2 {
-  width: 92%;
+.mb-search-item2 {
+  width: 90% !important;
+  margin-left: 15px;
 }
 
 .mb-search2 input {
@@ -206,9 +218,10 @@ body {
 }
 
 .mb-sidebar {
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0px;
+  z-index: 1;
 }
 
 .sidebar-2 {
@@ -218,8 +231,12 @@ body {
   background: #fff;
 }
 
+.sidebar-2 .menu-icon {
+    margin-right: 1rem;
+}
+
 .extra-mt {
-  padding-top: 95px;
+  padding-top: 70px;
 }
 
 .menu-icon {
@@ -323,7 +340,7 @@ body {
 }
 
 .user-label {
-  margin-left: 30px;
+  margin-left: 40px;
 }
 
 .bar-top {
@@ -333,6 +350,14 @@ body {
 
 .search-wrap {
   position: relative;
+  width: 70%;
+  margin: 5px 5px;
+}
+
+.write-wrap {
+  position: relative;
+  /* width:  50%; */
+  margin: 5px auto;
 }
 
 .search-icon .fa {
@@ -391,20 +416,6 @@ body {
   .up-wd {
     margin-right: 5px;
     width: 19%;
-  }
-}
-
-@media (max-width: 1099px) {
-  .extra-mt {
-    padding-top: 30px;
-  }
-
-  .menu-icon {
-    margin-right: 1px;
-  }
-
-  .sidebar-nav {
-    padding-top: 150px;
   }
 }
 
@@ -778,7 +789,7 @@ body {
 }
 
 .fileupload-modal .modal-content .modal-body {
-    padding: 1.9rem;
+    padding: 1rem 5rem;
     height: 386px;
 }
 
@@ -820,4 +831,12 @@ body {
 
 .image-name:hover {
     color: red;
+}
+
+.create-doc-modal .modal-body {
+    padding: 1rem 8rem;
+}
+
+.note-content { 
+    width: calc(100% - 300px) !important;
 }

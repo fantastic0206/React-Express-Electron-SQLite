@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 
-const api = "http://192.168.107.47:3001";
+const api = "http://localhost:3001";
 
 function FileUploadModal(props) {
   const { show, handleCancel, fileUpload, pathImage } = props;
