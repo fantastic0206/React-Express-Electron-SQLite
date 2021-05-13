@@ -9,7 +9,7 @@ import { getNotes, searchNotes } from "../actions/note";
 
 import ShowImageModal from "../components/ShowImageModal";
 
-const api = "http://localhost:3001";
+const api = "http://localhost:3000";
 
 const Plain = {
   light: "#f8f9fa",
@@ -26,7 +26,6 @@ const Plain = {
 
 const Lined = {
   light: "linear-gradient(#e6e1e1 0.9px, transparent 0.9px, #f8f9fa 0.9px)",
-
   darkd: "linear-gradient(#e6e1e1 0.9px, transparent 0.9px, #545454 0.9px)",
   gray: "linear-gradient(#e6e1e1 0.9px, transparent 0.9px, #C7C7C7 0.9px)",
   dangr: "linear-gradient(#e6e1e1 0.9px, transparent 0.9px, #FF9191 0.9px)",
@@ -43,18 +42,14 @@ const Grid = {
     "linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, #f8f9fa 0.9px",
   darkd:
     "linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, #545454 0.9px",
-  gray:
-    "linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, #C7C7C7 0.9px",
+  gray: "linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, #C7C7C7 0.9px",
   dangr:
     "linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, #FF9191 0.9px",
   prime:
     "linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, #9AD0FF 0.9px",
-  scs:
-    "linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, #A7F6CE 0.9px",
-  war:
-    "linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, #FFF29B 0.9px",
-  inf:
-    "linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, #FFBC9A 0.9px",
+  scs: "linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, #A7F6CE 0.9px",
+  war: "linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, #FFF29B 0.9px",
+  inf: "linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, #FFBC9A 0.9px",
   straw:
     "linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, #FFABCA 0.9px",
   inver:
@@ -141,7 +136,7 @@ function Note() {
         </div>
       </div>
       <div className="row text-resize">
-        {selectedGrid === "th-large" &&
+        {selectedGrid === "th" &&
           noteData.map((data, index) => {
             return (
               <div
@@ -173,7 +168,11 @@ function Note() {
                       </a>
                     </div>
                   </div>
-                  <p className="mb-0 ">{data.content}</p>
+                  <p
+                    className="mb-0 note-content-th"
+                    dangerouslySetInnerHTML={{ __html: data.content }}
+                  ></p>
+                  {/* <p className="mb-0 ">{data.content}</p>
                   <div className="image-name-div">
                     <label
                       className="image-name"
@@ -181,23 +180,71 @@ function Note() {
                     >
                       {data.imageName}
                     </label>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             );
           })}
-        {selectedGrid === "th" && <h1>TH</h1>}
+        {selectedGrid === "th-large" &&
+          noteData.map((data, index) => {
+            return (
+              <div
+                className={`col-xl-2 col-resize col-lg-4 col-sm-4 col-4 mt-3`}
+                key={index}
+                onClick={() => selectNote(data)}
+              >
+                <div
+                  className={`note-th p-2 p-md-3 rounded-bg box-shadow ${
+                    typeArr[data.papperType]
+                  } ${data.note_id == selectedNote ? "note-active" : ""}`}
+                  style={
+                    data.papperType === "Plain"
+                      ? { backgroundColor: Plain[data.papperColor] }
+                      : data.papperType === "Lined"
+                      ? { backgroundImage: Lined[data.papperColor] }
+                      : data.papperType === "Grid"
+                      ? { backgroundImage: Grid[data.papperColor] }
+                      : { backgroundImage: Dotted[data.papperColor] }
+                  }
+                >
+                  <div className="note-dot d-flex flex-row">
+                    <div className="nt-head">
+                      <h5 className="text-primary">{data.title}</h5>
+                    </div>
+                    <div className="nt-icon ms-auto">
+                      <a>
+                        <img className="" src={dotImage} alt="" />
+                      </a>
+                    </div>
+                  </div>
+                  <p
+                    className="mb-0 note-content-th"
+                    dangerouslySetInnerHTML={{ __html: data.content }}
+                  ></p>
+                  {/* <div className="image-name-div">
+                    <label
+                      className="image-name"
+                      onClick={() => viewImage(data.imagePath)}
+                    >
+                      {data.imageName}
+                    </label>
+                  </div> */}
+                </div>
+              </div>
+            );
+          })}
         {selectedGrid === "th-list" &&
           noteData.map((data, index) => {
             return (
               <div
                 className="col-xl-8 col-lg-8 col-sm-10 offset-sm-1 col-12 mt-3"
                 key={index}
+                onClick={() => selectNote(data)}
               >
                 <div
-                  className={`note-1 box-shadow p-3 rounded-bg ${
+                  className={`note-th box-shadow p-3 rounded-bg ${
                     typeArr[data.papperType]
-                  }`}
+                  } ${data.note_id == selectedNote ? "note-active" : ""}`}
                   style={
                     data.papperType === "Plain"
                       ? { backgroundColor: Plain[data.papperColor] }
@@ -218,16 +265,20 @@ function Note() {
                       </a>
                     </div>
                   </div>
-                  <p className="mb-0">{data.content}</p>
+                  <p
+                    className="mb-0 note-content-th"
+                    dangerouslySetInnerHTML={{ __html: data.content }}
+                  ></p>
+                  {/* <p className="mb-0">{data.content}</p>
                   <div className="image-name-div">
                     <label
                       className="image-name"
-                      style={{float: "unset"}}
+                      style={{ float: "unset" }}
                       onClick={() => viewImage(data.imagePath)}
                     >
                       {data.imageName}
                     </label>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             );

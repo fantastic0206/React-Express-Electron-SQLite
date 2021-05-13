@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 
-const api = "http://localhost:3001";
+const api = "http://localhost:3000";
 
 function FileUploadModal(props) {
   const { show, handleCancel, fileUpload, pathImage } = props;
-  console.log(pathImage);
   const containerRef = useRef(null);
 
   const [image, setImage] = useState(null);

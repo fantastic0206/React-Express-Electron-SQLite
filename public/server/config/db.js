@@ -46,8 +46,8 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
           // Table already created
         } else {
           var insert =
-            "INSERT INTO notes (papperType, papperColor, title, content, imagePath, imageName) VALUES (?, ?, ?, ?, ?, ?)";
-          db.run(insert, ["Plain", "#f8f9fa", "", "", "", ""]);
+            "INSERT INTO notes (papperType, papperColor, title, content) VALUES (?, ?, ?, ?, ?, ?)";
+          db.run(insert, ["Plain", "#f8f9fa", "test", "initdata"]);
         }
       }
     );

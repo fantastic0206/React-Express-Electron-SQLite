@@ -68,7 +68,7 @@ body {
   width: 300px !important;
   height: 100vh;
   background: #fff;
-  margin-top: -80px;
+  /* margin-top: -80px; */
 }
 
 .sidebar-nav {
@@ -771,6 +771,10 @@ body {
   overflow: auto;
 }
 
+.note-th:hover {
+    border: 1.5px solid #2699fb;
+}
+
 .note-hover:hover {
   border: 1.5px solid #2699fb;
 }
@@ -826,7 +830,7 @@ body {
     color: rgb(255, 92, 147);
     cursor: pointer;
     text-align: end;
-    float: right;
+    /* float: right; */
 }
 
 .image-name:hover {
@@ -839,4 +843,33 @@ body {
 
 .note-content { 
     width: calc(100% - 300px) !important;
+}
+
+.note-content-th img {
+  width: 80px;
+  height: 80px;
+}
+
+.text-div {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  background: white;
+}
+
+.text-div .text-content {
+  /* border: 1px solid black; */
+  min-height: calc(50vh);
+  font-size: 20px;
+  padding: 20px;
+  width: 100%;
+}
+
+.text-div .text-content:focus-visible {
+  outline: none;
+}
+
+.text-div .text-content .attach-img {
+  width: 100px;
+  height: 100px;
 }

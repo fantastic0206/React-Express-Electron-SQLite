@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,6 +12,7 @@ import { store } from "react-notifications-component";
 
 function Creates(props) {
   const dispatch = useDispatch();
+  const containerRef = useRef();
 
   const {
     papperType,
@@ -21,7 +22,6 @@ function Creates(props) {
     propContent,
     noteId,
     pathImage,
-    imageName,
   } = props.location.state ? props.location.state : "";
 
   const { isSaved } = useSelector((state) => state.noteData);
@@ -29,10 +29,8 @@ function Creates(props) {
   const [showCreateDoc, setShowCreateDoc] = useState(false);
   const [showFileUpload, setShowFileUpload] = useState(false);
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [fileData, setFileData] = useState();
-
-  const [fileName, setFileName] = useState();
+  const [content, setContent] = useState();
+  const [imageData, setImageData] = useState([]);
 
   const showImageBar = () => {
     $(".icon-wrap").fadeToggle("slow");
@@ -48,13 +46,22 @@ function Creates(props) {
   };
 
   const onSave = () => {
-    const sendData = new FormData();
+    let content = containerRef.current.innerHTML;
 
-    sendData.append("papperType", papperType);
-    sendData.append("papperColor", papperColor);
-    sendData.append("title", title);
-    sendData.append("content", content);
-    sendData.append("file", fileData);
+    // const sendData = new FormData();
+
+    // sendData.append("papperType", papperType);
+    // sendData.append("papperColor", papperColor);
+    // sendData.append("title", title);
+    // sendData.append("content", content);
+    // sendData.append("file", fileData);
+
+    const sendData = {
+      papperType: papperType,
+      papperColor: papperColor,
+      title: title,
+      content: content,
+    };
 
     if (status === "create") dispatch(addNote(sendData));
     else if (status === "edit") dispatch(updateNote(sendData, noteId));
@@ -63,16 +70,32 @@ function Creates(props) {
   };
 
   const fileUpload = (file) => {
-    console.log(file);
-    setFileName(file.name);
-    setFileData(file);
+    let content = containerRef.current.innerHTML;
+    setContent(content);
+
+    const reader = new FileReader();
+    reader.onload = _handleReaderLoaded;
+    reader.readAsBinaryString(file);
+  };
+
+  const _handleReaderLoaded = (readerEvt) => {
+    let binaryString = readerEvt.target.result;
+    let imageBaseData = `data:image/png;base64,${btoa(binaryString)}`;
+    if (!content) {
+      imageData.push(imageBaseData);
+      setImageData(imageData);
+    } else {
+      setContent(
+        content +
+          `<img class="attach-img" src="${imageBaseData}" />`
+      );
+    }
   };
 
   useEffect(() => {
     setTitle(createTitle);
     setContent(propContent);
-    setFileName(imageName);
-  }, [createTitle, propContent, imageName]);
+  }, [createTitle, propContent]);
 
   useEffect(() => {
     if (isSaved) {
@@ -133,15 +156,33 @@ function Creates(props) {
               </div>
             </div>
             <div className="content-area">
-              <textarea
-                rows={20}
-                placeholder="Content..."
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-              />
-            </div>
-            <div>
-              <p>{fileName}</p>
+              {!content ? (
+                <div className="text-div">
+                  <div
+                    contentEditable="true"
+                    className="text-content"
+                    suppressContentEditableWarning={true}
+                    ref={containerRef}
+                  >
+                    {imageData &&
+                      imageData.map((data, index) => {
+                        return (
+                          <img key={index} className="attach-img" src={data} />
+                        );
+                      })}
+                  </div>
+                </div>
+              ) : (
+                <div className="text-div">
+                  <div
+                    contentEditable="true"
+                    className="text-content"
+                    suppressContentEditableWarning={true}
+                    ref={containerRef}
+                    dangerouslySetInnerHTML={{ __html: content }}
+                  ></div>
+                </div>
+              )}
             </div>
           </div>
         </div>
