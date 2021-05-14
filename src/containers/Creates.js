@@ -30,7 +30,7 @@ function Creates(props) {
   const [showFileUpload, setShowFileUpload] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState();
-  const [imageData, setImageData] = useState([]);
+  const [fontType, setFontType] = useState("<div class='font-type'>Aa</div>");
 
   const showImageBar = () => {
     $(".icon-wrap").fadeToggle("slow");
@@ -40,6 +40,14 @@ function Creates(props) {
     $(".color-area").fadeToggle("slow");
   };
 
+  const showBrashBar = () => {
+    $(".brash-color-area").fadeToggle("slow");
+  };
+
+  const showFontTypeSelect = () => {
+    $(".font-type-select").fadeToggle("slow");
+  };
+
   const handleCancel = () => {
     setShowCreateDoc(false);
     setShowFileUpload(false);
@@ -47,14 +55,6 @@ function Creates(props) {
 
   const onSave = () => {
     let content = containerRef.current.innerHTML;
-
-    // const sendData = new FormData();
-
-    // sendData.append("papperType", papperType);
-    // sendData.append("papperColor", papperColor);
-    // sendData.append("title", title);
-    // sendData.append("content", content);
-    // sendData.append("file", fileData);
 
     const sendData = {
       papperType: papperType,
@@ -70,26 +70,22 @@ function Creates(props) {
   };
 
   const fileUpload = (file) => {
-    let content = containerRef.current.innerHTML;
-    setContent(content);
-
     const reader = new FileReader();
     reader.onload = _handleReaderLoaded;
     reader.readAsBinaryString(file);
   };
 
   const _handleReaderLoaded = (readerEvt) => {
+    let content = containerRef.current.innerHTML;
     let binaryString = readerEvt.target.result;
     let imageBaseData = `data:image/png;base64,${btoa(binaryString)}`;
-    if (!content) {
-      imageData.push(imageBaseData);
-      setImageData(imageData);
-    } else {
-      setContent(
-        content +
-          `<img class="attach-img" src="${imageBaseData}" />`
-      );
-    }
+
+    content = content + `<img class="attach-img" src="${imageBaseData}" />`;
+    setContent(content);
+  };
+
+  const fontTypeSet = (e) => {
+    setFontType(e.target);
   };
 
   useEffect(() => {
@@ -123,12 +119,12 @@ function Creates(props) {
             <div className="d-flex flex-row justify-content-between ">
               <div className="back-arrow">
                 <Link to={"create"}>
-                  <i className="fa fa radius bg-primary fa-chevron-left"></i>
+                  <i className="fa radius p-3 bg-primary fa-chevron-left"></i>
                 </Link>
               </div>
               <div className="home-icon btn ">
                 <Link to={"note"}>
-                  <i className="fa  p-3 radius bg-primary  fa-th-list"></i>
+                  <i className="fa p-3 radius bg-primary fa-th-list"></i>
                 </Link>
               </div>
             </div>
@@ -137,13 +133,9 @@ function Creates(props) {
       </section>
 
       <section className="tittle-area">
-        <div className="container">
+        <div className="container-fluid creates">
           <div className="row">
             <div className="title-area">
-              {/* <div className="tittle text-center">
-                <h2 className="heading">Title</h2>
-                <hr />
-              </div> */}
               <div className="editable-tittle text-muted mt-5">
                 <div className="mb-title mb-4">
                   <input
@@ -156,33 +148,13 @@ function Creates(props) {
               </div>
             </div>
             <div className="content-area">
-              {!content ? (
-                <div className="text-div">
-                  <div
-                    contentEditable="true"
-                    className="text-content"
-                    suppressContentEditableWarning={true}
-                    ref={containerRef}
-                  >
-                    {imageData &&
-                      imageData.map((data, index) => {
-                        return (
-                          <img key={index} className="attach-img" src={data} />
-                        );
-                      })}
-                  </div>
-                </div>
-              ) : (
-                <div className="text-div">
-                  <div
-                    contentEditable="true"
-                    className="text-content"
-                    suppressContentEditableWarning={true}
-                    ref={containerRef}
-                    dangerouslySetInnerHTML={{ __html: content }}
-                  ></div>
-                </div>
-              )}
+              <div
+                contentEditable="true"
+                className="text-content"
+                suppressContentEditableWarning={true}
+                ref={containerRef}
+                dangerouslySetInnerHTML={{ __html: content }}
+              ></div>
             </div>
           </div>
         </div>
@@ -203,41 +175,76 @@ function Creates(props) {
           </div>
         </div>
       </section>
+      <section>
+        <div className="brash-color-area bg-light box-shadow border-0 rounded">
+          <div className="p-1">
+            <div className="row justify-content-center p-3">
+              <div className="col-md-6 p-0">
+                <h6 className="p-2">Color</h6>
+                <div className="p-1">
+                  <div className="color-1 brash-rounded mt-2"></div>
+                  <div className="color-2 brash-rounded mt-2"></div>
+                  <div className="color-3 brash-rounded mt-2"></div>
+                  <div className="color-4 brash-rounded mt-2"></div>
+                  <div className="color-5 brash-rounded mt-2"></div>
+                  <div className="color-6 brash-rounded mt-2"></div>
+                  <div className="color-7 brash-rounded mt-2"></div>
+                  <div className="color-8 brash-rounded mt-2"></div>
+                  <div className="color-9 brash-rounded mt-2"></div>
+                </div>
+              </div>
+              <div className="col-md-6 p-0">
+                <h6 className="p-2">Size</h6>
+                <div className="p-1">
+                  <div className="size-1 brash-rounded brash-size-color mt-3"></div>
+                  <div className="size-2 brash-rounded brash-size-color mt-3"></div>
+                  <div className="size-3 brash-rounded brash-size-color mt-3"></div>
+                  <div className="size-4 brash-rounded brash-size-color mt-3"></div>
+                  <div className="size-5 brash-rounded brash-size-color mt-3"></div>
+                  <div className="size-6 brash-rounded brash-size-color mt-3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="font-type-select bg-light box-shadow border-0 rounded">
+        <div className="font-type">
+          <del onClick={fontTypeSet}>Aa</del>
+        </div>
+        <div className="font-type">
+          <u onClick={fontTypeSet}>Aa</u>
+        </div>
+        <div className="font-type" onClick={fontTypeSet}>
+          aa
+        </div>
+        <div className="font-type" onClick={fontTypeSet}>
+          AA
+        </div>
+        <div className="font-type" onClick={fontTypeSet}>
+          Aa
+        </div>
+      </section>
       <section className="custom-footer bg-primary fixed-bottom">
         <div className="container-fluid ">
           <div className="row py-2">
             <div className="col-8">
-              <ul className="text-area d-flex flex-row mb-0 ">
-                <li className="txt-size text-white">
-                  <span className="p-2 ">17</span>
+              <ul className="text-area d-flex flex-row mb-0 pt-2">
+                <li className="txt-size text-white mt-2">
+                  <span className="p-2">17</span>
                 </li>
-                <li className="select-fnt text-white">
-                  <select className="bg-primary" name="" id="">
-                    <option className="bg-light selected" value="1">
-                      AA
-                    </option>
-                    <option className="bg-light" value="">
-                      {/* <del>Aa</del> */}
-                      Aa
-                    </option>
-                    <option className="bg-light" value="">
-                      {/* <ul>Aa</ul> */}
-                      Aa
-                    </option>
-                    <option className="bg-light" value="">
-                      aa
-                    </option>
-                    <option className="bg-light  " value="">
-                      Aa
-                    </option>
-                  </select>
+                <li
+                  className="select-fnt text-white"
+                  onClick={showFontTypeSelect}
+                >
+                  <span className="p-2">Aa</span>
                 </li>
-                <li className="selected-fnt  text-primary rounded">
+                {/* <li className="selected-fnt  text-primary rounded">
                   <div className="font-list bg-light rounded p-2">
                     Roboto
-                    <i className="fa  fa-arrow-up"></i>
+                    <i className="fa fa-arrow-up"></i>
                   </div>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div className="col-4">
@@ -247,24 +254,21 @@ function Creates(props) {
                   style={{ cursor: "pointer" }}
                   onClick={showPencilBar}
                 >
-                  <a>
-                    <i className="fa fa-pencil"></i>
-                  </a>
+                  <i className="fa fa-pencil"></i>
                 </div>
-                <div className="image-icon p-2 p-md-3 ">
-                  <Link to={"create"}>
-                    <i className="fa fa-paint-brush"></i>
-                  </Link>
+                <div
+                  className="image-icon p-2 p-md-3"
+                  style={{ cursor: "pointer" }}
+                  onClick={showBrashBar}
+                >
+                  <i className="fa fa-paint-brush"></i>
                 </div>
                 <div
                   className="image-icon-3 p-2 p-md-3"
                   style={{ cursor: "pointer" }}
                   onClick={showImageBar}
                 >
-                  <a>
-                    {" "}
-                    <i className="fa fa-image"></i>
-                  </a>
+                  <i className="fa fa-image"></i>
                 </div>
               </ul>
               <div className="icon-wrap">
@@ -275,10 +279,7 @@ function Creates(props) {
                     setShowCreateDoc(true);
                   }}
                 >
-                  <a>
-                    {" "}
-                    <i className="fa fa-folder text-white"></i>
-                  </a>
+                  <i className="fa fa-folder text-white"></i>
                 </div>
                 <div
                   className="folder-icon bg-primary box-shadow border-0 rounded-circle"
@@ -287,10 +288,7 @@ function Creates(props) {
                     setShowFileUpload(true);
                   }}
                 >
-                  <a>
-                    {" "}
-                    <i className="fa fa-camera text-white"></i>
-                  </a>
+                  <i className="fa fa-camera text-white"></i>
                 </div>
               </div>
             </div>
@@ -303,6 +301,8 @@ function Creates(props) {
         papperType={papperType}
         papperColor={papperColor}
         addDoc={onSave}
+        docContent={content}
+        title={title}
       />
       <FileUploadModal
         show={showFileUpload}

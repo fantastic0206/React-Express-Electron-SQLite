@@ -39,7 +39,7 @@ function FileUploadModal(props) {
     >
       <Modal.Header closeButton></Modal.Header>
       <Modal.Body>
-        {image && <img src={image} width="100%" height="100%" />}
+        {image && <img src={image} width="100%" />}
       </Modal.Body>
       <Modal.Footer>
         <input

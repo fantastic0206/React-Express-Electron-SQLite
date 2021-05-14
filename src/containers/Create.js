@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import NotePapper from "../components/NotePapper";
 import NoteColor from "../components/NoteColor";
@@ -8,7 +8,6 @@ import { initSaved } from "../actions/note";
 import { useDispatch } from "react-redux";
 
 function Create() {
-  const history = useHistory();
   const dispatch = useDispatch();
 
   const [papperType, setPapperType] = useState("Plain");
@@ -33,16 +32,16 @@ function Create() {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-10 note-create-title">
           <div className="write-wrap">
             <div className="mb-write mb-2">
               <input type="text" placeholder="Write tittle here.." onChange={(e) => {setCreateTitle(e.target.value)}} />
             </div>
           </div>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-2">
           <Link to="/note">
-            <div className="home-back btn home-xl-back p-3 radius bg-primary">
+            <div className="home-back btn home-xl-back radius bg-primary">
               <i className="fa text-white fa-th-list"></i>
             </div>
           </Link>
@@ -96,7 +95,7 @@ function Create() {
           <h3 className="paper-heading">Choose colour</h3>
         </div>
       </div>
-      <div className="row">
+      <div className="row note-create-color">
         <div className="col-lg-6 col-12">
           <div className="d-flex flex-row create-color justify-content-between">
             <NoteColor

@@ -4,7 +4,7 @@ function NotePapper(props) {
     const { papperType, bodyClass, selectedType } = props;
 
   return (
-    <div className="col-lg-3 col-xl-3 col-xxl-2 col-sm-6 col-6 col-md-3 text-center extra-mr">
+    <div className="col-lg-3 col-xl-3 col-sm-6 col-6 col-md-3 note-papper text-center extra-mr">
       <div
         className={bodyClass}
         onClick={() => selectedType(papperType)}

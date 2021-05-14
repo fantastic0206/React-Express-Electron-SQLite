@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 const noteImg = require("../assets/images/note.png");
 const importantImg = require("../assets/images/important.png");
@@ -7,24 +7,33 @@ const createImg = require("../assets/images/create.png");
 const categoryImg = require("../assets/images/category.png");
 
 function Sidebar() {
+  const history = useHistory();
+
+  const [selectItem, setSelectItem] = useState("note");
+
+  const goPage = (pageName) => {
+    history.push(`/${pageName}`);
+    setSelectItem(pageName);
+  }
+
   return (
     <div className="sidebar">
       <ul className="sidebar-nav">
-        <li className="sidebar-item">
+        <li className={selectItem === "note" ? "sidebar-item sidebar-item-active" :"sidebar-item"} onClick={() => goPage("note")}>
           <img className="menu-icon img-fluid" src={noteImg} alt="" />
-          <Link to={"/note"}>Notes</Link>
+          <a className={selectItem === "note" ? "sidebar-item-font-active" : "sidebar-item-font"}>Notes</a>
         </li>
-        <li className="sidebar-item">
+        <li className={selectItem === "important" ? "sidebar-item sidebar-item-active" :"sidebar-item"} onClick={() => goPage("important")}>
           <img className="menu-icon img-fluid" src={importantImg} alt="" />
-          <a href="#">Important</a>
+          <a className={selectItem === "important" ? "sidebar-item-font-active" : "sidebar-item-font"}>Important</a>
         </li>
-        <li className="sidebar-item">
+        <li className={selectItem === "create" ? "sidebar-item sidebar-item-active" :"sidebar-item"} onClick={() => goPage("create")}>
           <img className="menu-icon img-fluid" src={createImg} alt="" />
-          <Link to={"/create"}>Create New</Link>
+          <a className={selectItem === "create" ? "sidebar-item-font-active" : "sidebar-item-font"}>Create New</a>
         </li>
-        <li className="sidebar-item">
+        <li className={selectItem === "catagory" ? "sidebar-item sidebar-item-active" :"sidebar-item"} onClick={() => goPage("catagory")}>
           <img className="menu-icon img-fluid" src={categoryImg} alt="" />
-          <a href="#">Catagories</a>
+          <a className={selectItem === "catagory" ? "sidebar-item-font-active" : "sidebar-item-font"}>Catagories</a>
         </li>
       </ul>
     </div>

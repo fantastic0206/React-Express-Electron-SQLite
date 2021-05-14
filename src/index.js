@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
 import rootReducer from "./reducers";
 import { Provider } from "react-redux";
@@ -11,7 +10,10 @@ import thunk from "redux-thunk";
 import ReactNotification from "react-notifications-component";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import 'react-notifications-component/dist/theme.css'
+import "react-notifications-component/dist/theme.css";
+
+import "./assets/css/style.css";
+import "font-awesome/css/font-awesome.min.css";
 
 const store = createStore(
   rootReducer,

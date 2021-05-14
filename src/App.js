@@ -1,10 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
-import "./assets/css/style.css";
-import { getTestData } from "./actions/test";
-import "font-awesome/css/font-awesome.min.css";
 
 import Note from "./containers/Note";
 import Create from "./containers/Create";
@@ -26,6 +21,7 @@ function App() {
                 <Sidebar />
                 <div className="note-content">
                   <Switch>
+                    <Route exact path="/" component={Note} />
                     <Route exact path="/note" component={Note} />
                     <Route exact path="/create" component={Create} />
                     <Route exact path="/editnote" component={EditNote} />

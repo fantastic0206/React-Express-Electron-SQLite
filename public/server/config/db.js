@@ -38,8 +38,6 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             papperColor TEXT,
             title TEXT,
             content TEXT,
-            imagePath TEXT,
-            imageName TEXT
             )`,
       (err) => {
         if (err) {

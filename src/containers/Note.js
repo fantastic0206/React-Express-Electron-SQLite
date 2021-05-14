@@ -3,13 +3,8 @@ import MbBars from "../components/MbBars";
 
 import dotImage from "../assets/images/dot.png";
 import { useDispatch, useSelector } from "react-redux";
-import $ from "jquery";
 
 import { getNotes, searchNotes } from "../actions/note";
-
-import ShowImageModal from "../components/ShowImageModal";
-
-const api = "http://localhost:3000";
 
 const Plain = {
   light: "#f8f9fa",
@@ -70,7 +65,6 @@ const Dotted = {
 };
 
 const typeArr = {
-  // Plain: "bg-light",
   Lined: "lined-bg",
   Grid: "grid-bg",
   Dotted: "dott-bg",
@@ -85,9 +79,6 @@ function Note() {
 
   const { noteData } = useSelector((state) => state.noteData);
 
-  const [showImage, setShowImage] = useState(false);
-  const [pathImage, setPathImage] = useState();
-
   const selectNote = (data) => {
     setSelectedNote(data.note_id);
     setSelectedData(data);
@@ -99,18 +90,6 @@ function Note() {
 
   const selectGrid = (data) => {
     setSelectedGrid(data);
-  };
-
-  const viewImage = (imagePath) => {
-    let pathImageName = imagePath.replace(/\\/g, "/");
-    if (pathImageName[0] !== "/") pathImageName = "/" + pathImageName;
-    setPathImage(api + pathImageName);
-
-    setShowImage(true);
-  };
-
-  const handleCancel = () => {
-    setShowImage(false);
   };
 
   useEffect(() => {
@@ -136,7 +115,7 @@ function Note() {
         </div>
       </div>
       <div className="row text-resize">
-        {selectedGrid === "th" &&
+        {selectedGrid === "th-large" &&
           noteData.map((data, index) => {
             return (
               <div
@@ -172,24 +151,15 @@ function Note() {
                     className="mb-0 note-content-th"
                     dangerouslySetInnerHTML={{ __html: data.content }}
                   ></p>
-                  {/* <p className="mb-0 ">{data.content}</p>
-                  <div className="image-name-div">
-                    <label
-                      className="image-name"
-                      onClick={() => viewImage(data.imagePath)}
-                    >
-                      {data.imageName}
-                    </label>
-                  </div> */}
                 </div>
               </div>
             );
           })}
-        {selectedGrid === "th-large" &&
+        {selectedGrid === "th" &&
           noteData.map((data, index) => {
             return (
               <div
-                className={`col-xl-2 col-resize col-lg-4 col-sm-4 col-4 mt-3`}
+                className={`col-xl-2 col-lg-6 col-sm-6 col-6 up-wd col-resize mt-3`}
                 key={index}
                 onClick={() => selectNote(data)}
               >
@@ -221,14 +191,6 @@ function Note() {
                     className="mb-0 note-content-th"
                     dangerouslySetInnerHTML={{ __html: data.content }}
                   ></p>
-                  {/* <div className="image-name-div">
-                    <label
-                      className="image-name"
-                      onClick={() => viewImage(data.imagePath)}
-                    >
-                      {data.imageName}
-                    </label>
-                  </div> */}
                 </div>
               </div>
             );
@@ -269,16 +231,6 @@ function Note() {
                     className="mb-0 note-content-th"
                     dangerouslySetInnerHTML={{ __html: data.content }}
                   ></p>
-                  {/* <p className="mb-0">{data.content}</p>
-                  <div className="image-name-div">
-                    <label
-                      className="image-name"
-                      style={{ float: "unset" }}
-                      onClick={() => viewImage(data.imagePath)}
-                    >
-                      {data.imageName}
-                    </label>
-                  </div> */}
                 </div>
               </div>
             );
@@ -288,11 +240,6 @@ function Note() {
         selectedData={selectedData}
         selectGrid={selectGrid}
         selectedGrid={selectedGrid}
-      />
-      <ShowImageModal
-        show={showImage}
-        handleCancel={handleCancel}
-        pathImage={pathImage}
       />
     </div>
   );
