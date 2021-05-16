@@ -101,7 +101,7 @@ function Note() {
       <div className="row">
         <div className="col">
           <div className="search-wrap">
-            <div className="mb-search mb-4 ">
+            <div className="mb-search mb-4">
               <input
                 type="text"
                 placeholder="Search..."

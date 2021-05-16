@@ -10,7 +10,7 @@ function Header() {
           <div className="navbar-bars">
             <i className="fa fa-bars"></i>
           </div>
-          <a className="navbar-brand text-center " href="">
+          <a className="navbar-brand text-center" href="">
             <img className="img-fluid logo" src={logoImg} alt="" />
           </a>
         </div>

@@ -1,10 +1,15 @@
 import React from "react";
 
 function NoteColor(props) {
-    const {papperColor, selectedColor, bodyClass} = props;
+  const { papperColor, selectedColor, bodyClass } = props;
 
   return (
-    <div className={bodyClass} onClick={() => {selectedColor(papperColor)}}></div>
+    <div
+      className={bodyClass}
+      onClick={() => {
+        selectedColor(papperColor);
+      }}
+    ></div>
   );
 }
 

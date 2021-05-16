@@ -23,10 +23,10 @@ function FileUploadModal(props) {
   };
 
   useEffect(() => {
-    if(pathImage) {
-        let pathImageName = pathImage.replace(/\\/g, '/');
-        if(pathImageName[0] !== '/') pathImageName = '/' + pathImageName;
-        setImage(api + pathImageName);
+    if (pathImage) {
+      let pathImageName = pathImage.replace(/\\/g, "/");
+      if (pathImageName[0] !== "/") pathImageName = "/" + pathImageName;
+      setImage(api + pathImageName);
     }
   }, [pathImage]);
 
@@ -38,9 +38,7 @@ function FileUploadModal(props) {
       aria-labelledby="example-custom-modal-styling-title"
     >
       <Modal.Header closeButton></Modal.Header>
-      <Modal.Body>
-        {image && <img src={image} width="100%" />}
-      </Modal.Body>
+      <Modal.Body>{image && <img src={image} width="100%" />}</Modal.Body>
       <Modal.Footer>
         <input
           type="file"

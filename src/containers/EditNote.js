@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import NotePapper from "../components/NotePapper";
 import NoteColor from "../components/NoteColor";
 
 function EditNote(props) {
-  const history = useHistory();
   const { selectedData } = props.location.state;
 
   const [papperType, setPapperType] = useState("Plain");

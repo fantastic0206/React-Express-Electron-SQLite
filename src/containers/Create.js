@@ -27,7 +27,7 @@ function Create() {
 
   useEffect(() => {
     dispatch(initSaved());
-  }, [])
+  }, []);
 
   return (
     <div className="container">
@@ -35,7 +35,13 @@ function Create() {
         <div className="col-md-10 note-create-title">
           <div className="write-wrap">
             <div className="mb-write mb-2">
-              <input type="text" placeholder="Write tittle here.." onChange={(e) => {setCreateTitle(e.target.value)}} />
+              <input
+                type="text"
+                placeholder="Write tittle here.."
+                onChange={(e) => {
+                  setCreateTitle(e.target.value);
+                }}
+              />
             </div>
           </div>
         </div>
@@ -177,7 +183,12 @@ function Create() {
             <Link
               to={{
                 pathname: "/creates",
-                state: {papperType: papperType, papperColor: color, status: "create", createTitle: createTitle}
+                state: {
+                  papperType: papperType,
+                  papperColor: color,
+                  status: "create",
+                  createTitle: createTitle,
+                },
               }}
               className="text-white btn-res btn bg-primary "
             >

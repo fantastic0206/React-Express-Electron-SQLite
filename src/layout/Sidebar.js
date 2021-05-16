@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 const noteImg = require("../assets/images/note.png");
@@ -9,31 +9,95 @@ const categoryImg = require("../assets/images/category.png");
 function Sidebar() {
   const history = useHistory();
 
-  const [selectItem, setSelectItem] = useState("note");
+  const [selectItem, setSelectItem] = useState("/note");
 
   const goPage = (pageName) => {
-    history.push(`/${pageName}`);
+    history.push(pageName);
     setSelectItem(pageName);
-  }
+  };
+
+  useEffect(() => {
+    setSelectItem(window.location.pathname);
+  }, [window.location])
 
   return (
     <div className="sidebar">
       <ul className="sidebar-nav">
-        <li className={selectItem === "note" ? "sidebar-item sidebar-item-active" :"sidebar-item"} onClick={() => goPage("note")}>
+        <li
+          className={
+            selectItem === "/note"
+              ? "sidebar-item sidebar-item-active"
+              : "sidebar-item"
+          }
+          onClick={() => goPage("/note")}
+        >
           <img className="menu-icon img-fluid" src={noteImg} alt="" />
-          <a className={selectItem === "note" ? "sidebar-item-font-active" : "sidebar-item-font"}>Notes</a>
+          <a
+            className={
+              selectItem === "/note"
+                ? "sidebar-item-font-active"
+                : "sidebar-item-font"
+            }
+          >
+            Notes
+          </a>
         </li>
-        <li className={selectItem === "important" ? "sidebar-item sidebar-item-active" :"sidebar-item"} onClick={() => goPage("important")}>
+        <li
+          className={
+            selectItem === "/important"
+              ? "sidebar-item sidebar-item-active"
+              : "sidebar-item"
+          }
+          onClick={() => goPage("/important")}
+        >
           <img className="menu-icon img-fluid" src={importantImg} alt="" />
-          <a className={selectItem === "important" ? "sidebar-item-font-active" : "sidebar-item-font"}>Important</a>
+          <a
+            className={
+              selectItem === "/important"
+                ? "sidebar-item-font-active"
+                : "sidebar-item-font"
+            }
+          >
+            Important
+          </a>
         </li>
-        <li className={selectItem === "create" ? "sidebar-item sidebar-item-active" :"sidebar-item"} onClick={() => goPage("create")}>
+        <li
+          className={
+            selectItem === "/create"
+              ? "sidebar-item sidebar-item-active"
+              : "sidebar-item"
+          }
+          onClick={() => goPage("/create")}
+        >
           <img className="menu-icon img-fluid" src={createImg} alt="" />
-          <a className={selectItem === "create" ? "sidebar-item-font-active" : "sidebar-item-font"}>Create New</a>
+          <a
+            className={
+              selectItem === "/create"
+                ? "sidebar-item-font-active"
+                : "sidebar-item-font"
+            }
+          >
+            Create New
+          </a>
         </li>
-        <li className={selectItem === "catagory" ? "sidebar-item sidebar-item-active" :"sidebar-item"} onClick={() => goPage("catagory")}>
+        <li
+          className={
+            selectItem === "/catagory"
+              ? "sidebar-item sidebar-item-active"
+              : "sidebar-item"
+          }
+          onClick={() => goPage("/catagory")}
+        >
           <img className="menu-icon img-fluid" src={categoryImg} alt="" />
-          <a className={selectItem === "catagory" ? "sidebar-item-font-active" : "sidebar-item-font"}>Catagories</a>
+          <a
+            className={
+              selectItem === "/catagory"
+                ? "sidebar-item-font-active"
+                : "sidebar-item-font"
+            }
+          >
+            Catagories
+          </a>
         </li>
       </ul>
     </div>

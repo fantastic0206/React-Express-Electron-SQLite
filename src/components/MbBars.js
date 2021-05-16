@@ -1,7 +1,7 @@
 import React from "react";
 import $ from "jquery";
 import { Link, useHistory } from "react-router-dom";
-import { store } from "react-notifications-component"
+import { store } from "react-notifications-component";
 
 function MbBars(props) {
   const history = useHistory();

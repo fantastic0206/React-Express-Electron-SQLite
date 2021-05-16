@@ -3,7 +3,7 @@ const express = require("express");
 const db = require("../config/db");
 
 exports.getData = (req, res) => {
-//   console.log(req.body);
+  //   console.log(req.body);
   var sql = "select * from user";
   var params = [];
 
@@ -17,4 +17,4 @@ exports.getData = (req, res) => {
       data: rows,
     });
   });
-}
+};

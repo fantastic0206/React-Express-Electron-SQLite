@@ -11,7 +11,7 @@ function Layout() {
     <Router>
       <Header />
       <section className="note-area" id="noteArea">
-        <div className="container-fluid g-0  extra-mt">
+        <div className="container-fluid g-0 extra-mt">
           <div className="row">
             <div className="col-md-2">
               <Sidebar />

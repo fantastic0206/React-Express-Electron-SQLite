@@ -96,19 +96,19 @@ body {
 }
 
 .sidebar-item-active {
-  background-color: #F3F5FF;
+  background-color: #f3f5ff;
 }
 
 .sidebar-item-font-active {
-  color: #4A4A4A !important;
+  color: #4a4a4a !important;
 }
 
 .sidebar-item:hover {
-  background-color: #F3F5FF;
+  background-color: #f3f5ff;
 }
 
 .sidebar-item .sidebar-item-font {
-  color: #6E6E6ECC !important;
+  color: #6e6e6ecc !important;
   text-decoration: none;
 }
 
@@ -870,7 +870,7 @@ body {
   color: #fff;
   width: 45%;
   border-radius: 10px;
-  background-color: #536DFE;
+  background-color: #536dfe;
   margin: 3rem 0;
   padding: 12px;
   font-size: 1.2rem;
@@ -1080,7 +1080,7 @@ body {
 .font-type-select {
   width: 50px;
   position: absolute;
-  left: 6%;
+  left: 5.5rem;
   bottom: 8%;
   display: none;
 }
@@ -1092,5 +1092,5 @@ body {
 }
 
 .font-type-select .font-type:hover {
-  background-color: #F3F5FF;
+  background-color: #f3f5ff;
 }

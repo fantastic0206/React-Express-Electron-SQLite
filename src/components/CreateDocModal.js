@@ -3,7 +3,17 @@ import Modal from "react-bootstrap/Modal";
 import NoteDoc from "../components/NoteDoc";
 
 function CreateDocModal(props) {
-  const { show, handleCancel, papperType, papperColor, addDoc, docContent, title } = props;
+  const {
+    show,
+    handleCancel,
+    papperType,
+    papperColor,
+    addDoc,
+    updateDoc,
+    docContent,
+    title,
+    status,
+  } = props;
 
   const [backColor, setBackColor] = useState();
 
@@ -29,15 +39,47 @@ function CreateDocModal(props) {
     >
       <Modal.Header closeButton></Modal.Header>
       <Modal.Body>
-        <NoteDoc papperType={papperType} backColor={backColor} docContent={docContent} title={title} />
+        <NoteDoc
+          papperType={papperType}
+          backColor={backColor}
+          docContent={docContent}
+          title={title}
+        />
       </Modal.Body>
       <Modal.Footer>
-        <button type="button" className="btn btn-primary" onClick={addDoc}>
-          ADD TO DOCUMENT
-        </button>
-        <button type="button" className="btn btn-primary">
-          CREATE NEW DOCUMENT
-        </button>
+        {status === "create" ? (
+          <>
+            <button
+              type="button"
+              className="btn btn-primary"
+              disabled
+              onClick={updateDoc}
+            >
+              ADD TO DOCUMENT
+            </button>
+            <button type="button" className="btn btn-primary" onClick={addDoc}>
+              CREATE NEW DOCUMENT
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={updateDoc}
+            >
+              ADD TO DOCUMENT
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              disabled
+              onClick={addDoc}
+            >
+              CREATE NEW DOCUMENT
+            </button>
+          </>
+        )}
       </Modal.Footer>
     </Modal>
   );

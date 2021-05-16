@@ -1,6 +1,6 @@
 const initialData = {
-  testData: []
-}
+  testData: [],
+};
 
 export default function testReducer(state = initialData, action) {
   switch (action.type) {

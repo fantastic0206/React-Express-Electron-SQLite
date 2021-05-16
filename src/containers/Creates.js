@@ -30,22 +30,45 @@ function Creates(props) {
   const [showFileUpload, setShowFileUpload] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState();
-  const [fontType, setFontType] = useState("<div class='font-type'>Aa</div>");
+  const [fontVal, setFontVal] = useState("Aa");
+  const [fontTag, setFontTag] = useState();
+
+  const [imageBar, setImageBar] = useState(false);
+  const [pencilBar, setPencilBar] = useState(false);
+  const [brashBar, setBrashBar] = useState(false);
+  const [fontTypeSelect, setFontTypeSelect] = useState(false);
+
+  const [selectedTxt, setSelectedTxt] = useState("");
 
   const showImageBar = () => {
-    $(".icon-wrap").fadeToggle("slow");
+    setImageBar(!imageBar);
+    setPencilBar(false);
+    setBrashBar(false);
+    setFontTypeSelect(false);
   };
 
   const showPencilBar = () => {
-    $(".color-area").fadeToggle("slow");
+    setPencilBar(!pencilBar);
+    setImageBar(false);
+    setBrashBar(false);
+    setFontTypeSelect(false);
   };
 
   const showBrashBar = () => {
-    $(".brash-color-area").fadeToggle("slow");
+    setBrashBar(!brashBar);
+    setImageBar(false);
+    setPencilBar(false);
+    setFontTypeSelect(false);
   };
 
   const showFontTypeSelect = () => {
-    $(".font-type-select").fadeToggle("slow");
+    let content = containerRef.current.innerHTML;
+    setContent(content);
+
+    setFontTypeSelect(!fontTypeSelect);
+    setImageBar(false);
+    setPencilBar(false);
+    setBrashBar(false);
   };
 
   const handleCancel = () => {
@@ -63,8 +86,22 @@ function Creates(props) {
       content: content,
     };
 
-    if (status === "create") dispatch(addNote(sendData));
-    else if (status === "edit") dispatch(updateNote(sendData, noteId));
+    dispatch(addNote(sendData));
+
+    setShowCreateDoc(false);
+  };
+
+  const onUpdate = () => {
+    let content = containerRef.current.innerHTML;
+
+    const sendData = {
+      papperType: papperType,
+      papperColor: papperColor,
+      title: title,
+      content: content,
+    };
+
+    dispatch(updateNote(sendData, noteId));
 
     setShowCreateDoc(false);
   };
@@ -85,7 +122,28 @@ function Creates(props) {
   };
 
   const fontTypeSet = (e) => {
-    setFontType(e.target);
+    let tagName = e.target.tagName.toLowerCase();
+    let tagVal = e.target.innerText;
+
+    setFontVal(tagVal);
+    setFontTag(tagName);
+
+    let contents = "";
+    if (tagName === "del") contents = content.replace(selectedTxt, `<del>${selectedTxt}</del>`);
+    else if (tagName === "u") contents = content.replace(selectedTxt, `<u>${selectedTxt}</u>`);
+    else if (tagName === "div") {
+      if(tagVal === "AA") contents = content.replace(selectedTxt, selectedTxt.toUpperCase());
+      else if(tagVal === "aa") contents = content.replace(selectedTxt, selectedTxt.toLowerCase());
+      else if(tagVal === "Aa") contents = content.replace(selectedTxt, selectedTxt.charAt(0).toUpperCase() + selectedTxt.slice(1));
+    }
+    setContent(contents);
+  };
+
+  const getSelectedTxt = () => {
+    setSelectedTxt(window.getSelection().toString());
+
+    let content = containerRef.current.innerHTML;
+    setContent(content);
   };
 
   useEffect(() => {
@@ -150,9 +208,10 @@ function Creates(props) {
             <div className="content-area">
               <div
                 contentEditable="true"
-                className="text-content"
+                className="text-content select--highlight--active"
                 suppressContentEditableWarning={true}
                 ref={containerRef}
+                onMouseLeave={getSelectedTxt}
                 dangerouslySetInnerHTML={{ __html: content }}
               ></div>
             </div>
@@ -160,8 +219,14 @@ function Creates(props) {
         </div>
       </section>
       <section>
-        <div className="color-area bg-light box-shadow border-0 rounded  ">
-          <div className="color-area-wrap p-1 ">
+        <div
+          className={
+            pencilBar
+              ? "color-area bg-light box-shadow border-0 rounded d-block"
+              : "color-area bg-light box-shadow border-0 rounded"
+          }
+        >
+          <div className="color-area-wrap p-1">
             <div className="color-text text-primary text-center">
               Make Color
             </div>
@@ -176,7 +241,13 @@ function Creates(props) {
         </div>
       </section>
       <section>
-        <div className="brash-color-area bg-light box-shadow border-0 rounded">
+        <div
+          className={
+            brashBar
+              ? "brash-color-area bg-light box-shadow border-0 rounded d-block"
+              : "brash-color-area bg-light box-shadow border-0 rounded"
+          }
+        >
           <div className="p-1">
             <div className="row justify-content-center p-3">
               <div className="col-md-6 p-0">
@@ -208,7 +279,13 @@ function Creates(props) {
           </div>
         </div>
       </section>
-      <section className="font-type-select bg-light box-shadow border-0 rounded">
+      <section
+        className={
+          fontTypeSelect
+            ? "font-type-select bg-light box-shadow border-0 rounded d-block"
+            : "font-type-select bg-light box-shadow border-0 rounded"
+        }
+      >
         <div className="font-type">
           <del onClick={fontTypeSet}>Aa</del>
         </div>
@@ -226,7 +303,7 @@ function Creates(props) {
         </div>
       </section>
       <section className="custom-footer bg-primary fixed-bottom">
-        <div className="container-fluid ">
+        <div className="container-fluid">
           <div className="row py-2">
             <div className="col-8">
               <ul className="text-area d-flex flex-row mb-0 pt-2">
@@ -237,14 +314,16 @@ function Creates(props) {
                   className="select-fnt text-white"
                   onClick={showFontTypeSelect}
                 >
-                  <span className="p-2">Aa</span>
+                  <span className="p-2">
+                    {fontTag === "del" ? (
+                      <del>{fontVal}</del>
+                    ) : fontTag === "u" ? (
+                      <u>{fontVal}</u>
+                    ) : (
+                      fontVal
+                    )}
+                  </span>
                 </li>
-                {/* <li className="selected-fnt  text-primary rounded">
-                  <div className="font-list bg-light rounded p-2">
-                    Roboto
-                    <i className="fa fa-arrow-up"></i>
-                  </div>
-                </li> */}
               </ul>
             </div>
             <div className="col-4">
@@ -271,7 +350,7 @@ function Creates(props) {
                   <i className="fa fa-image"></i>
                 </div>
               </ul>
-              <div className="icon-wrap">
+              <div className={imageBar ? "icon-wrap d-block" : "icon-wrap"}>
                 <div
                   className="folder-icon mb-2 bg-primary box-shadow border-0 rounded-circle"
                   style={{ cursor: "pointer" }}
@@ -301,8 +380,10 @@ function Creates(props) {
         papperType={papperType}
         papperColor={papperColor}
         addDoc={onSave}
+        updateDoc={onUpdate}
         docContent={content}
         title={title}
+        status={status}
       />
       <FileUploadModal
         show={showFileUpload}

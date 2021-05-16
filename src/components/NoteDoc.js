@@ -38,7 +38,7 @@ function NoteDoc(props) {
               ? { backgroundColor: bodyStyle }
               : { backgroundImage: bodyStyle }
           }
-          dangerouslySetInnerHTML={{__html: noteContent}}
+          dangerouslySetInnerHTML={{ __html: noteContent }}
         ></div>
       ) : (
         <div
