@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route, HashRouter } from "react-router-dom";
 
 import Note from "./containers/Note";
 import Create from "./containers/Create";
@@ -9,17 +9,27 @@ import Sidebar from "./layout/Sidebar";
 import EditNote from "./containers/EditNote";
 
 function App() {
+  const [showSideBar, setShowSideBar] = useState(false);
+
+  const showSidebar = () => {
+    setShowSideBar(!showSideBar);
+  };
+
+  const hideSide = () => {
+    if (showSideBar === true) setShowSideBar(false);
+  };
+
   return (
-    <Router>
+    <HashRouter>
       <Switch>
         <Route exact path="/creates" component={Creates} />
         <Route path="/">
-          <Header />
+          <Header showSidebar={showSidebar} />
           <section className="note-area" id="noteArea">
             <div className="container-fluid g-0 extra-mt">
               <div className="row">
-                <Sidebar />
-                <div className="note-content">
+                <Sidebar showSideBar={showSideBar} />
+                <div className="note-content" onClick={hideSide}>
                   <Switch>
                     <Route exact path="/" component={Note} />
                     <Route exact path="/note" component={Note} />
@@ -32,7 +42,7 @@ function App() {
           </section>
         </Route>
       </Switch>
-    </Router>
+    </HashRouter>
   );
 }
 

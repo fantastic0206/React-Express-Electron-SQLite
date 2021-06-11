@@ -13,6 +13,26 @@
     "appId": "note-app",
     "productName": "NoteApp",
     "copyright": "Copyright © 2021 ${author}",
+    "mac": {
+      "icon": "assets/icon.icns",
+      "type": "distribution",
+      "target": [
+        "pkg",
+        "dmg",
+        "mas"
+      ],
+      "publish": {
+        "provider": "s3",
+        "bucket": "example-releases",
+        "path": "releases"
+      },
+      "category": "public.app-category.news"
+    },
+    "mas": {
+      "entitlements": "assets/entitlements.mas.plist",
+      "entitlementsInherit": "assets/entitlements.mas.inherit.plist",
+      "provisioningProfile": "assets/embedded.provisionprofile"
+    },
     "win": {
       "icon": "public/logo.png"
     },
@@ -34,6 +54,7 @@
     "express": "^4.17.1",
     "font-awesome": "^4.7.0",
     "fs": "0.0.1-security",
+    "http-server": "^0.12.3",
     "jquery": "^3.6.0",
     "material-ui": "^0.20.2",
     "md5": "^2.3.0",
@@ -43,14 +64,17 @@
     "popper": "^1.0.1",
     "react": "^16.11.0",
     "react-bootstrap": "^1.5.2",
+    "react-contenteditable": "^3.3.5",
     "react-dom": "^16.11.0",
     "react-notifications-component": "^3.1.0",
     "react-popper": "^2.2.5",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.2.0",
+    "react-scripts": "^3.2.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "sanitize-html": "^2.4.0",
+    "shell": "^0.8.4",
     "sqlite3": "^5.0.2",
     "youch": "^2.0.10"
   },
@@ -63,8 +87,11 @@
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
     "electron-pack": "electron-builder -w",
+    "dist": "npx build --x64 --macos --win --linux --c.extraMetadata.main=build/electron.js -p always",
     "dev": "react-scripts start",
-    "server": "nodemon public/server --exec nodemon"
+    "dev-build": "react-scripts build",
+    "server": "nodemon public/server --exec nodemon",
+    "open": "concurrently \"http-server -a localhost -p 3000\" \"open http://localhost:3000/build\""
   },
   "eslintConfig": {
     "extends": "react-app"

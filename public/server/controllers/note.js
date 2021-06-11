@@ -7,7 +7,7 @@ exports.createData = (req, res) => {
   var content = req.body.content ? req.body.content : "";
 
   var insert =
-    "INSERT INTO appnote (papperType, papperColor, title, content) VALUES (?, ?, ?, ?)";
+    "INSERT INTO notes (papperType, papperColor, title, content) VALUES (?, ?, ?, ?)";
   db.run(insert, [papperType, papperColor, title, content], (err, rows) => {
     if (err) {
       res.status(404).json({ message: err.message });
@@ -18,7 +18,7 @@ exports.createData = (req, res) => {
 };
 
 exports.getNoteDatas = (req, res) => {
-  var select = "SELECT * FROM appnote";
+  var select = "SELECT * FROM notes";
   var params = [];
 
   db.all(select, params, (err, rows) => {
@@ -40,7 +40,7 @@ exports.updateData = (req, res) => {
   var title = req.body.title ? req.body.title : "";
   var content = req.body.content ? req.body.content : "";
 
-  var update = `UPDATE appnote SET "papperType" = '${papperType}', "papperColor" = '${papperColor}', "title" = '${title}', "content" = '${content}' WHERE "note_id" = '${noteId}'`;
+  var update = `UPDATE notes SET "papperType" = '${papperType}', "papperColor" = '${papperColor}', "title" = '${title}', "content" = '${content}' WHERE "note_id" = '${noteId}'`;
   db.run(update, (err, rows) => {
     if (err) {
       console.log(err);
@@ -53,7 +53,7 @@ exports.updateData = (req, res) => {
 exports.searchDatas = (req, res) => {
   var searchKey = req.body.searchKey;
 
-  var search = `SELECT * FROM appnote WHERE title LIKE '%${searchKey}%' OR content LIKE '%${searchKey}%'`;
+  var search = `SELECT * FROM notes WHERE title LIKE '%${searchKey}%' OR content LIKE '%${searchKey}%'`;
   var params = [];
 
   db.all(search, params, (err, rows) => {

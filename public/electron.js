@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
+const { shell } = require("electron");
 
 require("./server/index.js");
 
@@ -16,6 +17,7 @@ function createWindow() {
     },
     icon: "./logo.png",
   });
+
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"

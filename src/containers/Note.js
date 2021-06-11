@@ -124,7 +124,7 @@ function Note() {
                 onClick={() => selectNote(data)}
               >
                 <div
-                  className={`note-hover p-2 p-md-3 rounded-bg box-shadow ${
+                  className={`note-hover p-2 p-md-3 rounded-bg ${
                     typeArr[data.papperType]
                   } ${data.note_id == selectedNote ? "note-active" : ""}`}
                   style={
@@ -164,7 +164,7 @@ function Note() {
                 onClick={() => selectNote(data)}
               >
                 <div
-                  className={`note-th p-2 p-md-3 rounded-bg box-shadow ${
+                  className={`note-th note-hover p-2 p-md-3 rounded-bg ${
                     typeArr[data.papperType]
                   } ${data.note_id == selectedNote ? "note-active" : ""}`}
                   style={
@@ -204,7 +204,7 @@ function Note() {
                 onClick={() => selectNote(data)}
               >
                 <div
-                  className={`note-th box-shadow p-3 rounded-bg ${
+                  className={`note-th note-hover p-3 rounded-bg ${
                     typeArr[data.papperType]
                   } ${data.note_id == selectedNote ? "note-active" : ""}`}
                   style={

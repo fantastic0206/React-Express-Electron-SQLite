@@ -27,11 +27,11 @@ body {
 /*BASIC TYPOGRAPHY START*/
 
 .header {
-  background-color: #536dfe !important;
+  background-color: #2699FB !important;
 }
 
 .bg-primary {
-  background-color: #536dfe !important;
+  background-color: #2699FB !important;
 }
 
 .text-primary {
@@ -142,7 +142,7 @@ body {
 }
 
 .icon-group .fa {
-  color: #536dfe;
+  color: #2699FB;
   font-size: 20px;
   padding: 0;
 }
@@ -567,7 +567,8 @@ body {
 }
 
 .bg-wd:hover {
-  border: 1.5px solid #2699fb;
+  /* border: 1.5px solid #2699fb; */
+  outline: #2699fb auto 0.5px;
 }
 
 .bg-darkd {
@@ -587,13 +588,20 @@ body {
 }
 
 .create:hover {
-  border: 1px solid #2699fb;
+  /* border: 1px solid #2699fb; */
+  outline: #2699fb auto 0.5px;
 }
 .create:focus {
-  border: 1px solid #2699fb;
+  /* border: 1px solid #2699fb; */
+  outline: #2699fb auto 0.5px;
 }
 .create:active {
-  border: 1px solid #2699fb;
+  /* border: 1px solid #2699fb; */
+  outline: #2699fb auto 0.5px;
+}
+
+.create:focus-visible {
+  outline: unset;
 }
 
 .bg-scs {
@@ -782,7 +790,8 @@ body {
 }
 
 .divColor {
-  border: 2px solid #57b0fc;
+  /* border: 2px solid #57b0fc; */
+  outline: #2699fb auto 2px;
 }
 
 .modal-footer {
@@ -804,20 +813,26 @@ body {
   overflow: auto;
 }
 
-.note-th {
+/* .note-th {
   cursor: pointer;
 }
 
 .note-th:hover {
   border: 1.5px solid #2699fb;
-}
+} */
 
 .note-hover:hover {
-  border: 1.5px solid #2699fb;
+  /* border: 1.5px solid #2699fb; */
+  outline: #2699fb auto 0.5px;
+}
+
+.note-hover:focus-visible {
+  outline: unset;
 }
 
 .note-active {
-  border: 1.5px solid #2699fb;
+  /* border: 1.5px solid #2699fb; */
+  outline: #2699fb auto 0.5px;
 }
 
 .modal-dialog {
@@ -870,7 +885,7 @@ body {
   color: #fff;
   width: 45%;
   border-radius: 10px;
-  background-color: #536dfe;
+  background-color: #2699FB;
   margin: 3rem 0;
   padding: 12px;
   font-size: 1.2rem;
@@ -1083,14 +1098,108 @@ body {
   left: 5.5rem;
   bottom: 8%;
   display: none;
+  background-color: white !important;
 }
 
 .font-type-select .font-type {
   font-size: 1rem;
   padding: 6px 16px;
+  width: 100%;
   cursor: pointer;
+  border: none;
+  background-color: unset;
 }
 
 .font-type-select .font-type:hover {
   background-color: #f3f5ff;
+}
+
+.navbar-display-hide {
+  display: none;
+}
+
+@media (max-width: 1280px) {
+  .create-doc-modal .modal-body {
+    padding: 1rem 13rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .create-doc-modal .modal-body {
+    padding: 1rem 8rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    position: absolute;
+    z-index: 1;
+  }
+  .note-content {
+    width: 100% !important;
+  }
+  .note-papper {
+    max-width: 25%;
+  }
+  .modal-dialog {
+    max-width: 100%;
+  }
+  .navbar-display-hide {
+    display: block;
+    cursor: pointer;
+  }
+  .navbar-display-show {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: absolute;
+    z-index: 1;
+  }
+  .note-content {
+    width: 100% !important;
+  }
+  .note-papper {
+    max-width: 25%;
+  }
+  .modal-dialog {
+    max-width: 100%;
+  }
+  .navbar-display-hide {
+    display: block;
+    cursor: pointer;
+  }
+  .navbar-display-show {
+    display: none;
+  }
+  .search-wrap {
+    width: 100%;
+  }
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .note-papper {
+    max-width: 45%;
+    margin-top: 10px;
+  }
+  .create-doc-modal .modal-body {
+    padding: 1rem 3rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .create-doc-modal .modal-content {
+    width: 90%;
+  }
+  .fileupload-modal .modal-content .modal-body {
+    padding: 1rem 1rem;
+  }
 }

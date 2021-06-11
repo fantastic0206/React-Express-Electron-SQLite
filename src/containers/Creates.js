@@ -9,6 +9,8 @@ import $ from "jquery";
 import { addNote, updateNote } from "../actions/note";
 
 import { store } from "react-notifications-component";
+import ContentEditable from "react-contenteditable";
+import sanitizeHtml from "sanitize-html";
 
 function Creates(props) {
   const dispatch = useDispatch();
@@ -29,9 +31,9 @@ function Creates(props) {
   const [showCreateDoc, setShowCreateDoc] = useState(false);
   const [showFileUpload, setShowFileUpload] = useState(false);
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState();
+  const [content, setContent] = useState("");
   const [fontVal, setFontVal] = useState("Aa");
-  const [fontTag, setFontTag] = useState();
+  const [fontTag, setFontTag] = useState("");
 
   const [imageBar, setImageBar] = useState(false);
   const [pencilBar, setPencilBar] = useState(false);
@@ -39,6 +41,8 @@ function Creates(props) {
   const [fontTypeSelect, setFontTypeSelect] = useState(false);
 
   const [selectedTxt, setSelectedTxt] = useState("");
+  const [divContent, setDivContent] = useState("");
+  const [contents, setContents] = useState();
 
   const showImageBar = () => {
     setImageBar(!imageBar);
@@ -74,6 +78,19 @@ function Creates(props) {
   const handleCancel = () => {
     setShowCreateDoc(false);
     setShowFileUpload(false);
+  };
+
+  const changeDivValue = (e) => {
+    setContent(e.target.value);
+  };
+
+  const sanitizeConf = {
+    allowedTags: ["b", "i", "em", "strong", "a", "p", "h1", "u"],
+    allowedAttributes: { a: ["href"] },
+  };
+
+  const sanitize = () => {
+    if (fontTag !== "") setContent(sanitizeHtml(content, sanitizeConf));
   };
 
   const onSave = () => {
@@ -121,34 +138,27 @@ function Creates(props) {
     setContent(content);
   };
 
-  const fontTypeSet = (e) => {
-    let tagName = e.target.tagName.toLowerCase();
-    let tagVal = e.target.innerText;
+  const fontTypeSet = (e, tagname, tagval) => {
+    console.log(window.getSelection().getRangeAt(0));
+    console.log(
+      "==============",
+      window.getSelection().getRangeAt(0).cloneContents()
+    );
+    let tagName = tagname;
+    let tagVal = tagval;
+    let content = containerRef.current.innerHTML;
 
     setFontVal(tagVal);
     setFontTag(tagName);
-
-    let contents = "";
-    if (tagName === "del") contents = content.replace(selectedTxt, `<del>${selectedTxt}</del>`);
-    else if (tagName === "u") contents = content.replace(selectedTxt, `<u>${selectedTxt}</u>`);
-    else if (tagName === "div") {
-      if(tagVal === "AA") contents = content.replace(selectedTxt, selectedTxt.toUpperCase());
-      else if(tagVal === "aa") contents = content.replace(selectedTxt, selectedTxt.toLowerCase());
-      else if(tagVal === "Aa") contents = content.replace(selectedTxt, selectedTxt.charAt(0).toUpperCase() + selectedTxt.slice(1));
-    }
-    setContent(contents);
-  };
-
-  const getSelectedTxt = () => {
-    setSelectedTxt(window.getSelection().toString());
-
-    let content = containerRef.current.innerHTML;
     setContent(content);
+
+    if (tagname === "del") document.execCommand("strikeThrough", false, null);
+    else if (tagname === "u") document.execCommand("underline", false, null);
   };
 
   useEffect(() => {
-    setTitle(createTitle);
-    setContent(propContent);
+    setTitle(createTitle ? createTitle : "");
+    setContent(propContent ? propContent : "");
   }, [createTitle, propContent]);
 
   useEffect(() => {
@@ -190,7 +200,7 @@ function Creates(props) {
         </div>
       </section>
 
-      <section className="tittle-area">
+      <section className="title-area">
         <div className="container-fluid creates">
           <div className="row">
             <div className="title-area">
@@ -206,14 +216,17 @@ function Creates(props) {
               </div>
             </div>
             <div className="content-area">
-              <div
-                contentEditable="true"
+              <ContentEditable
                 className="text-content select--highlight--active"
-                suppressContentEditableWarning={true}
-                ref={containerRef}
-                onMouseLeave={getSelectedTxt}
-                dangerouslySetInnerHTML={{ __html: content }}
-              ></div>
+                html={content}
+                disabled={false}
+                // tagName="pre"
+                innerRef={containerRef}
+                // onKeyDown={changeDivValue}
+                onChange={changeDivValue}
+                // tagName="pre"
+                // onBlur={sanitize}
+              />
             </div>
           </div>
         </div>
@@ -250,7 +263,7 @@ function Creates(props) {
         >
           <div className="p-1">
             <div className="row justify-content-center p-3">
-              <div className="col-md-6 p-0">
+              <div className="col-md-6 p-0 w-50">
                 <h6 className="p-2">Color</h6>
                 <div className="p-1">
                   <div className="color-1 brash-rounded mt-2"></div>
@@ -264,7 +277,7 @@ function Creates(props) {
                   <div className="color-9 brash-rounded mt-2"></div>
                 </div>
               </div>
-              <div className="col-md-6 p-0">
+              <div className="col-md-6 p-0 w-50">
                 <h6 className="p-2">Size</h6>
                 <div className="p-1">
                   <div className="size-1 brash-rounded brash-size-color mt-3"></div>
@@ -286,21 +299,36 @@ function Creates(props) {
             : "font-type-select bg-light box-shadow border-0 rounded"
         }
       >
-        <div className="font-type">
-          <del onClick={fontTypeSet}>Aa</del>
-        </div>
-        <div className="font-type">
-          <u onClick={fontTypeSet}>Aa</u>
-        </div>
-        <div className="font-type" onClick={fontTypeSet}>
+        <button
+          className="font-type"
+          onClick={(e) => fontTypeSet(e, "del", "Aa")}
+        >
+          <del>Aa</del>
+        </button>
+        <button
+          className="font-type"
+          onClick={(e) => fontTypeSet(e, "u", "Aa")}
+        >
+          <u>Aa</u>
+        </button>
+        <button
+          className="font-type"
+          onClick={(e) => fontTypeSet(e, "div", "aa")}
+        >
           aa
-        </div>
-        <div className="font-type" onClick={fontTypeSet}>
+        </button>
+        <button
+          className="font-type"
+          onClick={(e) => fontTypeSet(e, "div", "AA")}
+        >
           AA
-        </div>
-        <div className="font-type" onClick={fontTypeSet}>
+        </button>
+        <button
+          className="font-type"
+          onClick={(e) => fontTypeSet(e, "div", "Aa")}
+        >
           Aa
-        </div>
+        </button>
       </section>
       <section className="custom-footer bg-primary fixed-bottom">
         <div className="container-fluid">
