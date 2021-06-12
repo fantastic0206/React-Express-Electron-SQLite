@@ -589,7 +589,7 @@ body {
 
 .create:hover {
   /* border: 1px solid #2699fb; */
-  outline: #2699fb auto 0.5px;
+  /* outline: #2699fb auto 0.5px; */
 }
 .create:focus {
   /* border: 1px solid #2699fb; */
@@ -963,7 +963,6 @@ body {
   font-size: 20px;
   padding: 20px;
   width: 100%;
-  background: white;
   border-radius: 8px;
 }
 
@@ -1192,6 +1191,9 @@ body {
   }
   .create-doc-modal .modal-body {
     padding: 1rem 3rem;
+  }
+  .font-type-select {
+    left: 4rem;
   }
 }
 

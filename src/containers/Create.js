@@ -22,7 +22,16 @@ function Create() {
   };
 
   const selectColor = (color) => {
-    setColor(color);
+    if (color === "light") setColor("#f8f9fa");
+    else if (color === "darkd") setColor("#545454");
+    else if (color === "gray") setColor("#C7C7C7");
+    else if (color === "dangr") setColor("#FF9191");
+    else if (color === "prime") setColor("#9AD0FF");
+    else if (color === "scs") setColor("#A7F6CE");
+    else if (color === "war") setColor("#FFF29B");
+    else if (color === "inf") setColor("#FFBC9A");
+    else if (color === "straw") setColor("#FFABCA");
+    else if (color === "inver") setColor("#E0C5FF");
   };
 
   useEffect(() => {

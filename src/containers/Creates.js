@@ -40,6 +40,9 @@ function Creates(props) {
   const [brashBar, setBrashBar] = useState(false);
   const [fontTypeSelect, setFontTypeSelect] = useState(false);
 
+  const [bodyClass, setBodyClass] = useState();
+  const [bodyStyle, setBodyStyle] = useState({});
+
   const [selectedTxt, setSelectedTxt] = useState("");
   const [divContent, setDivContent] = useState("");
   const [contents, setContents] = useState();
@@ -179,18 +182,38 @@ function Creates(props) {
     }
   }, [isSaved]);
 
+  useEffect(() => {
+    if (papperType === "Plain") {
+      setBodyClass("create p-4 extra-wd crp-wd");
+      setBodyStyle(papperColor);
+    } else if (papperType === "Lined") {
+      setBodyClass("create p-4 lined-bg crp-wd");
+      setBodyStyle(
+        `linear-gradient(#e6e1e1 0.9px, transparent 0.9px, ${papperColor} 0.9px)`
+      );
+    } else if (papperType === "Grid") {
+      setBodyClass("create p-4 grid-bg crp-wd");
+      setBodyStyle(
+        `linear-gradient(#e6e1e1 0.9px, transparent 0.9px), linear-gradient(to right, #e6e1e1 0.9px, ${papperColor} 0.9px)`
+      );
+    } else if (papperType === "Dotted") {
+      setBodyClass("create p-4 dott-bg crp-wd");
+      setBodyStyle(`radial-gradient(#8c8787 1px, ${papperColor} 0.5px)`);
+    }
+  }, [papperType, papperColor]);
+
   return (
     <div>
       <section className="custom-page">
         <div className="container-fluid">
           <div className="row mt-5">
-            <div className="d-flex flex-row justify-content-between ">
+            <div className="d-flex flex-row justify-content-between">
               <div className="back-arrow">
                 <Link to={"create"}>
                   <i className="fa radius p-3 bg-primary fa-chevron-left"></i>
                 </Link>
               </div>
-              <div className="home-icon btn ">
+              <div className="home-icon btn">
                 <Link to={"note"}>
                   <i className="fa p-3 radius bg-primary fa-th-list"></i>
                 </Link>
@@ -217,7 +240,7 @@ function Creates(props) {
             </div>
             <div className="content-area">
               <ContentEditable
-                className="text-content select--highlight--active"
+                className={`text-content select--highlight--active ${bodyClass}`}
                 html={content}
                 disabled={false}
                 // tagName="pre"
@@ -226,6 +249,11 @@ function Creates(props) {
                 onChange={changeDivValue}
                 // tagName="pre"
                 // onBlur={sanitize}
+                style={
+                  papperType === "Plain"
+                    ? { backgroundColor: bodyStyle }
+                    : { backgroundImage: bodyStyle }
+                }
               />
             </div>
           </div>
